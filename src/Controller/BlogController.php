@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,21 +46,21 @@ class BlogController extends AbstractController
     {
 
 
+
         $article = new Article();
-        $article->setTitle("This is the title")
-            ->setContent("This is the content")
-            ->setImage("This is the image ")
-
-            ->setCreatedAt(new \DateTime());
-
-        $form = $this->createFormBuilder($article)
-            ->add('title')
-            ->add('content')
-            ->add('image')
-            ->getForm();
 
 
-        dump($form);
+        $form = $this->createForm(ArticleType::class, $article);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {;
+
+            $article->setCreatedAt(new \DateTime());
+            $article = $form->getData();
+
+            $em->persist($article);
+            $em->flush();
+        }
 
 
 
