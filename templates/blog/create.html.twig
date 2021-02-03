@@ -2,11 +2,24 @@
 {% block body  %}
 
 
+	{% if isUpdate %}
+
+		<h3>Mise à jour de l'article</h3>
+	{% else %}
+		<h3>Ajouter un article</h3>
+	{% endif %}
+
 	{{ form_start(form)}}
 
 	{{form_widget(form)}}
 
-	<button type="submit" class="btn btn-primary">Ajouter l'article</button>
+	{% if isUpdate %}
+		<button type="submit" class="btn btn-primary">Mise a jour</button>
+	{% else %}
+
+		<button type="submit" class="btn btn-primary">Ajouter l'article</button>
+	{% endif %}
+
 
 	{{form_end(form)}}
 

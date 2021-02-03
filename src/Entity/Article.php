@@ -21,17 +21,20 @@ class Article
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
+     * @Assert\Length(min = 5, max = 10)
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank
+     * @Assert\Length(min = 5, max = 10)
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min = 5, max = 10)
      */
     private $image;
 
@@ -46,7 +49,9 @@ class Article
     }
 
     public function getTitle(): ?string
+
     {
+
         return $this->title;
     }
 

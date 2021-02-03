@@ -20,8 +20,6 @@ class BlogController extends AbstractController
     public function index(ArticleRepository $articleRepo): Response
     {
         $articles = $articleRepo->findAll();
-
-
         return $this->render('blog/index.html.twig', [
             'controller_name' => 'BlogController',
             'articles' => $articles
@@ -40,31 +38,35 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/blog/new", name="create_article")
+     * @Route("/blog/{id}/edit", name="edit_article")
      */
 
-    public function create(Request $request, EntityManagerInterface $em)
+    public function create(Article $article = null, Request $request, EntityManagerInterface $em)
     {
 
 
-
-        $article = new Article();
+        if (!$article) {
+            $article = new Article();
+        }
 
 
         $form = $this->createForm(ArticleType::class, $article);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {;
-
-            $article->setCreatedAt(new \DateTime());
-            $article = $form->getData();
+            dump($article);
+            if (!$article->getId()) {
+                $article->setCreatedAt(new \DateTime());
+            }
 
             $em->persist($article);
             $em->flush();
+            return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
         }
 
 
 
-        return $this->render('/blog/create.html.twig', ['form' => $form->createView()]);
+        return $this->render('/blog/create.html.twig', ['form' => $form->createView(), "isUpdate" => $article->getId()]);
     }
 
     /**
