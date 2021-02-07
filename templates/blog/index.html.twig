@@ -12,7 +12,8 @@
 					{{article.createdAt | date('d/m/y') }}
 					à
 					{{article.createdAt | date('h:m')}}
-					dans la catégorie politique</div>
+					dans la catégorie
+					{{article.category.title}}</div>
 				<div class="content">
 					<img src="{{article.image}}" alt="">
 					<p>

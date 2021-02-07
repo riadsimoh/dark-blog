@@ -26,9 +26,20 @@
 							<span class="sr-only">(current)</span>
 						</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('create_article')}}">Creer un article</a>
-					</li>
+					{% if app.user %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('create_article')}}">Creer un article</a>
+						</li>
+					{% endif %}
+					{% if not app.user %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('login')}}">Connexion</a>
+						</li>
+					{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('logout')}}">Déconnexion</a>
+						</li>
+					{% endif %}
 				</ul>
 			</div>
 		</nav>
@@ -36,3 +47,4 @@
 			</div>
 		</body>
 	</html>
+</body></html></body></html>
